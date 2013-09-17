@@ -1,14 +1,7 @@
 module.exports = function (app, express){
 
-    app.configure('all', function() {
-        app.enable('trust proxy')
-        var swig = require('swig');
-        app.engine('.html', swig.renderFile);
-        app.set('view engine', 'html');
-        app.set('views', __dirname+'/../views');
-    });
-
     app.configure('development', function() {
+        app.enable('trust proxy')
         app.use(express.logger('dev'));
         app.use(express.cookieParser());
         app.use(express.bodyParser());
@@ -20,6 +13,7 @@ module.exports = function (app, express){
 
 
     app.configure('production', function() {
+        app.enable('trust proxy')
         app.use(express.logger());
         app.use(express.cookieParser());
         app.use(express.bodyParser());

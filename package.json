@@ -5,7 +5,7 @@
     "private": true,
     "dependencies": {
         "express": "3.x",
-        "swig": "1.x.x",
-        "mongojs": "0.x.x"
+        "mongojs": "0.x.x",
+        "async": "0.x.x"
     }
 }
