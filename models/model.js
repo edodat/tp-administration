@@ -62,31 +62,31 @@ Model._db = db;
  */
 
 Model.find = function (){
-    this._collection.find.apply(this._collection, arguments);
+    return this._collection.find.apply(this._collection, arguments);
 };
 
 Model.findOne = function () {
-    this._collection.findOne.apply(this._collection, arguments);
+    return this._collection.findOne.apply(this._collection, arguments);
 };
 
 Model.findById = function (id, callback) {
-    this._collection.findOne({ _id: Model.ObjectId(id) }, callback);
+    return this._collection.findOne({ _id: Model.ObjectId(id) }, callback);
 };
 
 Model.findAndModify = function () {
-    this._collection.findAndModify.apply(this._collection, arguments);
+    return this._collection.findAndModify.apply(this._collection, arguments);
 };
 
 Model.update = function () {
-    this._collection.update.apply(this._collection, arguments);
+    return this._collection.update.apply(this._collection, arguments);
 };
 
 Model.save = function () {
-    this._collection.save.apply(this._collection, arguments);
+    return this._collection.save.apply(this._collection, arguments);
 };
 
 Model.remove = function () {
-    this._collection.remove.apply(this._collection, arguments);
+    return this._collection.remove.apply(this._collection, arguments);
 };
 
 /**
