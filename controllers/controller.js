@@ -37,11 +37,11 @@ Controller.success = function (res, obj) {
  * Handles technical error response
  *
  * @param res : HTTP response
- * @param message : error message
+ * @param error : error object
  */
-Controller.error = function (res, message) {
+Controller.error = function (res, error) {
     res.type('json');
-    res.json(500, { error: message });
+    res.json(500, { error: error });
 };
 
 /**
