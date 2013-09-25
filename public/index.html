@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>Administration dashboard</title>
+
+        <!-- Bootstrap -->
+        <!--<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.no-icons.min.css" rel="stylesheet" media="screen">-->
+        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet" media="screen">
+        <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet" media="screen">
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- Note: Local versions in "/vendor/bootstrap/assets/js/" -->
+        <!--[if lt IE 9]>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        <!-- Custom styles -->
+        <link href="/css/main.css" rel="stylesheet" media="screen">
+
+    </head>
+    <body>
+
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <!--Sidebar-->
+                <div class="span2" ng-include="'/partials/sidebar.html'" ng-controller="SidebarCtrl"></div>
+                <!--Body-->
+                <div class="span10" ng-view></div>
+            </div>
+        </div>
+
+        <!-- Placed at the end of the document so the pages load faster -->
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+        <!-- Bootstrap -->
+        <!--<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>-->
+        <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+
+        <!-- Angular -->
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+
+        <!-- Angular Bootstrap -->
+        <!-- WARNING : version 0.6.6 is not compatible with Bootstrap 3. Use version 0.7.0 once ready. -->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.6.0/ui-bootstrap-tpls.min.js"></script>
+
+        <!-- Lodash (necessary for Restacular) -->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.0.0/lodash.min.js"></script>
+
+        <!-- Restangular -->
+        <script src="//cdn.jsdelivr.net/restangular/1.1.3/restangular.min.js"></script>
+
+
+        <!-- Custom Javascript -->
+        <script src="angular/angular-app.js"></script>
+        <script src="angular/controllers/sidebar.js"></script>
+        <script src="angular/controllers/dashboard.js"></script>
+        <script src="angular/controllers/companies.js"></script>
+        <script src="angular/controllers/servers.js"></script>
+    </body>
+</html>
