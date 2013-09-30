@@ -9,6 +9,8 @@
 // INITIALIZATION //
 ////////////////////
 
+var Controller = require('./controller.js');
+
 /////////////
 // PRIVATE //
 /////////////
@@ -21,12 +23,4 @@
 var DashboardController = {};
 
 module.exports = DashboardController;
-
-/**
- *
- */
-DashboardController.render = function (req, res){
-    res.render('dashboard');
-};
-
 

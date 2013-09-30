@@ -41,7 +41,7 @@ Controller.success = function (res, obj) {
  */
 Controller.error = function (res, error) {
     res.type('json');
-    res.json(500, { error: error });
+    res.json(500, { error: error.message });
 };
 
 /**
@@ -66,3 +66,15 @@ Controller.notFound = function (res, message) {
     res.json(404, { error: message });
 };
 
+/**
+ * Helper function to use as a last callback before rendering.
+ * Controller will check error returned, otherwise returns object.
+ *
+ * @param res : HTTP response
+ */
+Controller.wrapup = function (res){
+    return function(err, obj){
+        if (err) return Controller.error(res, err);
+        return Controller.success(res, obj);
+    }
+};
