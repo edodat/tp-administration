@@ -19,8 +19,3 @@ var Controller = require('./controller.js');
 // PUBLIC //
 ////////////
 
-// Static class or singleton (equivalent in Javascript)
-var DashboardController = {};
-
-module.exports = DashboardController;
-

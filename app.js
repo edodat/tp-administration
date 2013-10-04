@@ -14,7 +14,7 @@ var http = require('http'),
     app = express();
 
 var controllers = require('./controllers');
-var Model = require('./models/model.js');
+var model = require('./models/model.js');
 
 ///////////////////
 // CONFIGURATION //
@@ -25,11 +25,11 @@ require('./config/express.js')(app, express);
 
 // Converts all incoming "_id" string parameters to MongoDB ObjectIDs
 app.param(['_id'], function(req, res, next, _id){
-    req.params._id = Model.ObjectId(_id);
+    req.params._id = model.ObjectId(_id);
     next();
 });
 app.put('*', function(req, res, next){
-    req.body._id = Model.ObjectId(req.body._id);
+    req.body._id = model.ObjectId(req.body._id);
     next();
 });
 

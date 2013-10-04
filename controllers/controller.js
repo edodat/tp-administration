@@ -18,17 +18,13 @@
 // PUBLIC //
 ////////////
 
-// Static class or singleton (equivalent in Javascript)
-var Controller = {};
-module.exports = Controller;
-
 /**
  * Handles success response
  *
  * @param res : HTTP response
  * @param obj : object to return
  */
-Controller.success = function (res, obj) {
+module.exports.success = function (res, obj) {
     res.type('json');
     res.json(obj);
 };
@@ -39,7 +35,7 @@ Controller.success = function (res, obj) {
  * @param res : HTTP response
  * @param error : error object
  */
-Controller.error = function (res, error) {
+module.exports.error = function (res, error) {
     res.type('json');
     res.json(500, { error: error.message });
 };
@@ -50,7 +46,7 @@ Controller.error = function (res, error) {
  * @param res : HTTP response
  * @param message : error message
  */
-Controller.unauthorized = function (res, message) {
+module.exports.unauthorized = function (res, message) {
     res.type('json');
     res.json(401, { error: message });
 };
@@ -61,7 +57,7 @@ Controller.unauthorized = function (res, message) {
  * @param res : HTTP response
  * @param message : error message
  */
-Controller.notFound = function (res, message) {
+module.exports.notFound = function (res, message) {
     res.type('json');
     res.json(404, { error: message });
 };
@@ -72,7 +68,7 @@ Controller.notFound = function (res, message) {
  *
  * @param res : HTTP response
  */
-Controller.wrapup = function (res){
+module.exports.wrapup = function (res){
     return function(err, obj){
         if (err) return Controller.error(res, err);
         return Controller.success(res, obj);

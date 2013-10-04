@@ -9,7 +9,7 @@
 // INITIALIZATION //
 ////////////////////
 
-var Model = require('./model.js');
+var model = require('./model.js');
 
 /////////////
 // PRIVATE //
@@ -19,9 +19,5 @@ var Model = require('./model.js');
 // PUBLIC //
 ////////////
 
-// Static class or singleton (equivalent in Javascript)
-var Server = {};
-module.exports = Server;
-
-Model.declare(Server, 'servers');
+model.declare(module.exports, 'servers');
 
