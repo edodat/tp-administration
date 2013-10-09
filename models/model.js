@@ -68,7 +68,7 @@ module.exports.findOne = function () {
 };
 
 module.exports.findById = function (id, callback) {
-    return this._collection.findOne({ _id: Model.ObjectId(id) }, callback);
+    return this._collection.findOne({ _id: module.exports.ObjectId(id) }, callback);
 };
 
 module.exports.findAndModify = function () {
@@ -94,6 +94,6 @@ module.exports.remove = function () {
  * @returns ObjectId
  */
 module.exports.ObjectId = function (id){
-    if (typeof id == 'string') return Model._db.ObjectId(id);
+    if (typeof id == 'string') return module.exports._db.ObjectId(id);
     else return id;
 };
