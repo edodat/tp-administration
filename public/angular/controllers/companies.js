@@ -6,6 +6,11 @@ angular.module('app').controller('CompaniesCtrl', function($scope, $modal, Resta
         $scope.companies = companies;
     });
 
+    $scope.Agents = Restangular.all('agents');
+    $scope.Agents.getList().then(function(agents) {
+        $scope.agents = agents;
+    });
+
     $scope.registerCompany = function(){
         $modal.open({
             templateUrl: 'register.html',
@@ -39,6 +44,34 @@ angular.module('app').controller('CompaniesCtrl', function($scope, $modal, Resta
         company.remove().then(function(){
             company.disabled = true;
         });
+    };
+
+    $scope.getAgentDetails = function(company){
+        if (!company.agent){
+            return { status: 'unbound' };
+        }
+        var host = company.agent.host;
+        var agent = _.find($scope.agents, { host: host });
+        if (!agent){
+            return { status: 'not running' };
+        }
+        var companyDetails = _.find(agent.companies, { company: company.key });
+        if (!companyDetails) {
+            return { status: 'standby' };
+        }
+        return { status: companyDetails.status, port: companyDetails.port };
+    };
+
+    $scope.bindAgent = function(company){
+        company.bind()
+    };
+
+    $scope.runAgent = function(company){
+        company.run();
+    };
+
+    $scope.standbyAgent = function(company){
+        company.standby();
     };
 
 });

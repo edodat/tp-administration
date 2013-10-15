@@ -1,0 +1,38 @@
+<h2>Agents</h2>
+
+<!-- Info bar -->
+<div class="alert alert-info">
+    <i class="icon-info-sign"></i>
+    Agents appear in this list once they startup.
+</div>
+
+<!-- Agents list -->
+<table class="table table-hover table-bordered" ng-show="agents.length">
+    <thead>
+    <tr>
+        <th>Host</th>
+        <th>Companies</th>
+        <th>Status</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="agent in agents | orderBy:'host'" id="{{ agent._id }}">
+        <td><strong>{{ agent.host }}</strong></td>
+        <td>
+            <ul style="list-style:none; margin-left:0;">
+                <li ng-repeat="company in agent.companies">
+                    {{ company.company }} : {{ company.status }}
+                    <span ng-show="company.port"> on port {{ company.port }}</span>
+                </li>
+            </ul>
+        </td>
+        <td>
+            <span class="text-success"><strong>Running</strong></span>
+        </td>
+        <td>
+            <button class="btn btn-sm btn-danger" ng-click="shutdownAgent(agent)"><i class="icon-off"></i> Shutdown</button>
+        </td>
+    </tr>
+    </tbody>
+</table>

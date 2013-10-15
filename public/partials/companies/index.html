@@ -20,11 +20,12 @@
         <th>Key</th>
         <th>Name</th>
         <th>Details</th>
+        <th>API Agent</th>
         <th>Actions</th>
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="company in companies | orderBy:'key'" ng-class="{ error: company.disabled }" ng-hide="company.disabled && !displayDisabled">
+    <tr ng-repeat="company in companies | orderBy:'key'" ng-hide="company.disabled && !displayDisabled" ng-class="{ muted: company.disabled }">
         <td><strong>{{ company.key }}</strong></td>
         <td>{{ company.details.name }}</td>
         <td>
@@ -43,6 +44,30 @@
                     </ul>
                 </li>
             </ul>
+        </td>
+        <td ng-switch="getAgentDetails(company).status">
+            <span ng-switch-when="unbound" class="text-error">
+                <strong>unbound</strong><br>
+                <button class="btn btn-sm btn-default" ng-click="bindAgent(company)"><i class="icon-pushpin"></i> Bind</button>
+            </span>
+            <span ng-switch-when="not running" tooltip="{{ company.agent.host }}" class="text-error">
+                <strong>not running</strong><br>
+            </span>
+            <span ng-switch-when="crashed" tooltip="{{ company.agent.host }}" class="text-error">
+                <strong>crashed</strong><br>
+                <button class="btn btn-sm btn-success" ng-click="runAgent(company)"><i class="icon-bolt"></i> Run</button>
+            </span>
+            <span ng-switch-when="standby" tooltip="{{ company.agent.host }}" class="text-warning">
+                <strong>standby</strong><br>
+                <button class="btn btn-sm btn-success" ng-click="runAgent(company)"><i class="icon-bolt"></i> Run</button>
+            </span>
+            <span ng-switch-when="starting" tooltip="{{ company.agent.host }}:{{ getAgentDetails(company).port }}" class="text-success">
+                <strong>starting</strong><br>
+            </span>
+            <span ng-switch-when="running" tooltip="{{ company.agent.host }}:{{ getAgentDetails(company).port }}" class="text-success">
+                <strong>running</strong><br>
+                <button class="btn btn-sm btn-warning" ng-click="standbyAgent(company)"><i class="icon-power-off"></i> Standby</button>
+            </span>
         </td>
         <td>
             <button class="btn btn-sm btn-default" ng-click="editCompany(company)"><i class="icon-edit"></i> Edit</button>
