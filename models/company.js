@@ -11,6 +11,8 @@
 
 var model = require('./model.js');
 
+model.declare(module.exports, 'companies');
+
 /////////////
 // PRIVATE //
 /////////////
@@ -19,5 +21,4 @@ var model = require('./model.js');
 // PUBLIC //
 ////////////
 
-model.declare(module.exports, 'companies');
 

@@ -13,6 +13,8 @@ var http = require('http'),
     express = require('express'),
     app = express();
 
+var bus = require('./controllers/bus.js');
+
 var controllers = require('./controllers');
 var model = require('./models/model.js');
 
@@ -41,11 +43,27 @@ app.get('/companies', controllers.companies.getCompanies);
 app.post('/companies', controllers.companies.register);
 app.put('/companies/:_id', controllers.companies.updateCompany);
 app.del('/companies/:_id', controllers.companies.disableCompany);
+app.post('/companies/:_id/bind', controllers.companies.bindCompanyAgent);
+app.post('/companies/:_id/run', controllers.companies.runCompanyAgent);
+app.post('/companies/:_id/standby', controllers.companies.standbyCompanyAgent);
 
-app.get('/servers', controllers.servers.getServers);
-app.post('/servers', controllers.servers.createServer);
-app.put('/servers/:_id', controllers.servers.updateServer);
-app.del('/servers/:_id', controllers.servers.deleteServer);
+app.get('/agents', controllers.agents.getAgents);
+app.post('/agents/:_id/shutdown', controllers.agents.shutdownAgent);
+
+
+
+///////////////////////////
+// SERVICE BUS LISTENERS //
+///////////////////////////
+
+bus.initialize(function(){
+
+    bus.on('agent.discover', controllers.agents.onAgentDiscover);
+    bus.on('agent.company', controllers.agents.onAgentCompany);
+    bus.on('agent.shutdown', controllers.agents.onAgentShutdown);
+
+    bus.discover();
+});
 
 
 //////////////////
