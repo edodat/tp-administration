@@ -37,7 +37,7 @@ function initialize (callback){
             durable: 'true'
         });
 
-        // declare administration queue (named with agent hostname)
+        // declare administration queue
         queue = connection.queue('administration', function(q){
             // Receive messages
             q.subscribe(function (message, headers, deliveryInfo) {
