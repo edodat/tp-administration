@@ -8,6 +8,7 @@
     "mongojs": "0.x.x",
     "async": "0.x.x",
     "amqp": "0.x.x",
-    "nodemailer": "0.x.x"
+    "nodemailer": "0.x.x",
+    "node-uuid": "1.x.X"
   }
 }
