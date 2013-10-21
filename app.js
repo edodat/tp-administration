@@ -62,6 +62,9 @@ bus.initialize(function(){
     bus.on('agent.company', controllers.agents.onAgentCompany);
     bus.on('agent.shutdown', controllers.agents.onAgentShutdown);
 
+    bus.on('website.check', controllers.companies.onKeyCheck);
+    bus.on('website.register', controllers.companies.onRegister);
+
     bus.discover();
 });
 
