@@ -19,9 +19,9 @@
     <tr>
         <th>Key</th>
         <th>Name</th>
+        <th>Status</th>
         <th>Details</th>
         <th>API Agent</th>
-        <th>Actions</th>
     </tr>
     </thead>
     <tbody>
@@ -29,6 +29,10 @@
         <td><strong>{{ company.key }}</strong></td>
         <td>{{ company.details.name }}</td>
         <td>
+            <button class="btn btn-sm btn-danger pull-right" ng-hide="company.disabled" ng-click="disableCompany(company)"><i class="icon-ban-circle"></i> Disable</button>
+        </td>
+        <td>
+            <button class="btn btn-sm btn-default pull-right" ng-click="editCompany(company)"><i class="icon-edit"></i> Edit</button>
             <ul style="list-style:none; margin-left:0;">
                 <li ng-show="company.details.website"><i class="icon-globe"></i> <a ng-href="http://{{ company.details.website }}">http://{{ company.details.website }}</a></li>
                 <li ng-show="company.details.contact.email"><i class="icon-envelope"></i> {{ company.details.contact.email }}</li>
@@ -47,31 +51,27 @@
         </td>
         <td ng-switch="getAgentDetails(company).status">
             <span ng-switch-when="unbound" class="text-error">
-                <strong>unbound</strong><br>
-                <button class="btn btn-sm btn-default" ng-click="bindAgent(company)"><i class="icon-pushpin"></i> Bind</button>
+                <button class="btn btn-sm btn-default pull-right" ng-click="bindAgent(company)"><i class="icon-pushpin"></i> Bind</button>
+                <strong>unbound</strong>
             </span>
             <span ng-switch-when="not running" tooltip="{{ company.agent.host }}" class="text-error">
-                <strong>not running</strong><br>
+                <strong>not running</strong>
             </span>
             <span ng-switch-when="crashed" tooltip="{{ company.agent.host }}" class="text-error">
-                <strong>crashed</strong><br>
-                <button class="btn btn-sm btn-success" ng-click="runAgent(company)"><i class="icon-bolt"></i> Run</button>
+                <button class="btn btn-sm btn-success pull-right" ng-click="runAgent(company)"><i class="icon-bolt"></i> Run</button>
+                <strong>crashed</strong>
             </span>
             <span ng-switch-when="standby" tooltip="{{ company.agent.host }}" class="text-warning">
-                <strong>standby</strong><br>
-                <button class="btn btn-sm btn-success" ng-click="runAgent(company)"><i class="icon-bolt"></i> Run</button>
+                <button class="btn btn-sm btn-success pull-right" ng-click="runAgent(company)"><i class="icon-bolt"></i> Run</button>
+                <strong>standby</strong>
             </span>
             <span ng-switch-when="starting" tooltip="{{ company.agent.host }}:{{ getAgentDetails(company).port }}" class="text-success">
-                <strong>starting</strong><br>
+                <strong>starting</strong>
             </span>
             <span ng-switch-when="running" tooltip="{{ company.agent.host }}:{{ getAgentDetails(company).port }}" class="text-success">
-                <strong>running</strong><br>
-                <button class="btn btn-sm btn-warning" ng-click="standbyAgent(company)"><i class="icon-power-off"></i> Standby</button>
+                <button class="btn btn-sm btn-warning pull-right" ng-click="standbyAgent(company)"><i class="icon-power-off"></i> Standby</button>
+                <strong>running</strong>
             </span>
-        </td>
-        <td>
-            <button class="btn btn-sm btn-default" ng-click="editCompany(company)"><i class="icon-edit"></i> Edit</button>
-            <button class="btn btn-sm btn-danger" ng-hide="company.disabled" ng-click="disableCompany(company)"><i class="icon-ban-circle"></i> Disable</button>
         </td>
     </tr>
     </tbody>
