@@ -35,8 +35,15 @@ module.exports._collection.drop();
  * @param port
  */
 module.exports.updateCompanyStatus = function (host, companyKey, status, port){
-    module.exports.update({ host: host }, { $pull: { 'companies': { company: companyKey } } }, function(){
-        module.exports.update({ host: host }, { $push: { 'companies': { company: companyKey, status: status, port: port } } });
+    module.exports.findOne({ host: host }, function(err, agent){
+        if (!agent) {
+            agent = { host: host, companies: [{ company: companyKey, status: status, port: port }] };
+            module.exports.save(agent);
+        } else {
+            module.exports.update({ host: host }, { $pull: { 'companies': { company: companyKey } } }, function(){
+                module.exports.update({ host: host }, { $push: { 'companies': { company: companyKey, status: status, port: port } } });
+            });
+        }
     });
 };
 
