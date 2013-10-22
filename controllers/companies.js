@@ -51,7 +51,7 @@ function sendActivation(company, callback){
         if(err) return callback(new Error('Technical error before sending activation email'));
 
         //TODO configurable links
-        var activationLink = 'https://'+company.key+'.app.tp.com/activate?token='+token.token;
+        var activationLink = 'https://'+company.key+'.app.tp.com/#/activate/'+token.token;
         // send mail
         mail.sendActivation(company.details.contact.email, activationLink, function(err){
             if(err) return callback(new Error('Technical error while sending activation email'));
