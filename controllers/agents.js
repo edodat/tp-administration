@@ -23,7 +23,7 @@ var controller = require('./controller.js'),
 ////////////
 
 /**
-* Listener called when an API agent requests information.
+* Listener called when an APP agent requests information.
  */
 module.exports.onAgentDiscover = function(message) {
     // Update or Insert
@@ -37,14 +37,14 @@ module.exports.onAgentDiscover = function(message) {
 };
 
 /**
- * Listener called when an API agent sends info for a company.
+ * Listener called when an APP agent sends info for a company.
  */
 module.exports.onAgentCompany = function(message) {
     Agent.updateCompanyStatus(message.host, message.company, message.status, message.port);
 };
 
 /**
- * Listener called when an API agent shuts down.
+ * Listener called when an APP agent shuts down.
  */
 module.exports.onAgentShutdown = function(message) {
     Agent.remove({ host: message.host });

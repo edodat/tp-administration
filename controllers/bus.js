@@ -116,14 +116,14 @@ module.exports.publishAgent = function(host, companyKey){
 };
 
 /**
- * Publishes a message to instruct server to run API instance
+ * Publishes a message to instruct server to run APP instance
  */
 module.exports.publishRun = function(company, agent){
     publish('admin.run', { company: company.key, host: agent.host });
 };
 
 /**
- * Publishes a message to instruct server to standby API instance
+ * Publishes a message to instruct server to standby APP instance
  */
 module.exports.publishStandby = function(company, agent){
     publish('admin.standby', { company: company.key, host: agent.host });

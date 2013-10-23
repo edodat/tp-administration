@@ -23,7 +23,7 @@ var controller = require('./controller.js'),
 var ACTIVATION_TOKEN_EXPIRATION_TIME = 1000 * 60 * 60; // 1 hour
 
 /**
- * Binds an API agent to a company.
+ * Binds an APP agent to a company.
  */
 function bind (company, callback) {
     // Select agent to bind
@@ -82,7 +82,7 @@ function register (company, callback) {
             // Publish registration to bus
             bus.publishRegistered(company);
 
-            // Bind an API agent to the company
+            // Bind an APP agent to the company
             bind(company, function(err){
                 //TODO how to handle this error ?
                 console.log('Binding error for company', company.key, ':', err);
@@ -138,7 +138,7 @@ module.exports.register = function (req, res) {
 };
 
 /**
- * Binds an API agent to a company.
+ * Binds an APP agent to a company.
  */
 module.exports.bindCompanyAgent = function (req, res){
     var _id = req.params._id;
