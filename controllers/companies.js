@@ -86,7 +86,7 @@ function register (company, callback) {
             // Bind an APP agent to the company
             bind(company, function(err){
                 //TODO how to handle this error ?
-                console.log('Binding error for company', company.key, ':', err);
+                if (err) console.log('Binding error for company', company.key, ':', err);
             });
 
             // Send activation email
