@@ -35,9 +35,9 @@ app.put('*', function(req, res, next){
     next();
 });
 
-////////////
-// ROUTES //
-////////////
+/////////
+// API //
+/////////
 
 app.get('/companies', controllers.companies.getCompanies);
 app.post('/companies', controllers.companies.register);
@@ -46,11 +46,21 @@ app.del('/companies/:_id', controllers.companies.disableCompany);
 app.post('/companies/:_id/bind', controllers.companies.bindCompanyAgent);
 app.post('/companies/:_id/run', controllers.companies.runCompanyAgent);
 app.post('/companies/:_id/standby', controllers.companies.standbyCompanyAgent);
+app.post('/companies/:_id/sendactivationemail', controllers.companies.sendActivationEmail);
 
 app.get('/agents', controllers.agents.getAgents);
 app.post('/agents/:_id/shutdown', controllers.agents.shutdownAgent);
 
 
+////////
+// WS //
+////////
+
+app.post('/ws/checkkey', controllers.companies.checkKey);
+app.post('/ws/register', controllers.companies.register);
+
+app.post('/ws/sendactivationemail', controllers.companies.sendActivationEmailWS);
+app.post('/ws/activate', controllers.companies.activateWS);
 
 ///////////////////////////
 // SERVICE BUS LISTENERS //
@@ -61,9 +71,6 @@ bus.initialize(function(){
     bus.on('agent.discover', controllers.agents.onAgentDiscover);
     bus.on('agent.company', controllers.agents.onAgentCompany);
     bus.on('agent.shutdown', controllers.agents.onAgentShutdown);
-
-    bus.on('website.check', controllers.companies.onKeyCheck);
-    bus.on('website.register', controllers.companies.onRegister);
 
     bus.discover();
 });

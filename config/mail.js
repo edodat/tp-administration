@@ -8,6 +8,8 @@ module.exports = {
         }
     },
 
-    FROM: "Lean Project <no-reply@lean-project.com>"
+    PRODUCT: 'Lean Project',
+    FROM: 'Lean Project <no-reply@lean-project.com>',
+    SUPPORT: 'support@lean-project.com'
 
 };

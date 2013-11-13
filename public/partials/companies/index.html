@@ -21,7 +21,7 @@
         <th>Name</th>
         <th>Status</th>
         <th>Details</th>
-        <th>APP Agent</th>
+        <th>Application instance</th>
     </tr>
     </thead>
     <tbody>
@@ -29,6 +29,7 @@
         <td><strong>{{ company.key }}</strong></td>
         <td>{{ company.details.name }}</td>
         <td>
+            <button class="btn btn-sm btn-default pull-right" ng-hide="company.active || company.disabled" ng-click="sendActivationEmail(company)"><i class="icon-envelope"></i> Send activation email</button>
             <button class="btn btn-sm btn-danger pull-right" ng-hide="company.disabled" ng-click="disableCompany(company)"><i class="icon-ban-circle"></i> Disable</button>
         </td>
         <td>
@@ -52,10 +53,10 @@
         <td ng-switch="getAgentDetails(company).status">
             <span ng-switch-when="unbound" class="text-error">
                 <button class="btn btn-sm btn-default pull-right" ng-click="bindAgent(company)"><i class="icon-pushpin"></i> Bind</button>
-                <strong>unbound</strong>
+                <strong>unbound to any agent</strong>
             </span>
             <span ng-switch-when="not running" tooltip="{{ company.agent.host }}" class="text-error">
-                <strong>not running</strong>
+                <strong>agent not running</strong>
             </span>
             <span ng-switch-when="crashed" tooltip="{{ company.agent.host }}" class="text-error">
                 <button class="btn btn-sm btn-success pull-right" ng-click="runAgent(company)"><i class="icon-bolt"></i> Run</button>

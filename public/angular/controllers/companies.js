@@ -46,6 +46,10 @@ angular.module('app').controller('CompaniesCtrl', function($scope, $modal, Resta
         });
     };
 
+    $scope.sendActivationEmail = function(company){
+        company.sendActivationEmail();
+    };
+
     $scope.getAgentDetails = function(company){
         if (!company.agent){
             return { status: 'unbound' };
@@ -63,7 +67,7 @@ angular.module('app').controller('CompaniesCtrl', function($scope, $modal, Resta
     };
 
     $scope.bindAgent = function(company){
-        company.bind()
+        company.bind();
     };
 
     $scope.runAgent = function(company){

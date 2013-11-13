@@ -135,17 +135,3 @@ module.exports.publishStandby = function(company, agent){
 module.exports.publishShutdown = function(agent){
     publish('admin.shutdown', { host: agent.host });
 };
-
-/**
- * Publishes a message to website with key availability result
- */
-module.exports.publishKeyCheckResult = function(key, available){
-    publish('admin.key.'+key, { available: available });
-};
-
-/**
- * Publishes a message to website with registration result
- */
-module.exports.publishRegistrationResult = function(company, ok, err){
-    publish('admin.registration.'+company.key, { ok: ok, error: err });
-};

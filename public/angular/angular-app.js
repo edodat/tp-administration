@@ -23,6 +23,7 @@ angular.module('app', ['ui.bootstrap', 'restangular'])
             company.addRestangularMethod('bind', 'post', 'bind');
             company.addRestangularMethod('run', 'post', 'run');
             company.addRestangularMethod('standby', 'post', 'standby');
+            company.addRestangularMethod('sendActivationEmail', 'post', 'sendactivationemail');
             return company;
         });
     })

@@ -45,7 +45,7 @@ function sendActivation(company, callback){
     var tokenValue = uuid();
     var issueDate = new Date(),
         expirationDate = new Date(issueDate.getTime() + ACTIVATION_TOKEN_EXPIRATION_TIME);
-    var token = { token: tokenValue, issueDate: issueDate, expirationDate: expirationDate, accessCount: 0 };
+    var token = { token: tokenValue, issueDate: issueDate, expirationDate: expirationDate };
 
     Company.update({ key: company.key }, { $set: { activation: token } }, function(err){
         if(err) return callback(new Error('Technical error before sending activation email'));
@@ -55,7 +55,8 @@ function sendActivation(company, callback){
         // send mail
         mail.sendActivation(company.details.contact.email, activationLink, function(err){
             if(err) return callback(new Error('Technical error while sending activation email'));
-            return callback(null, company);
+            console.log('[ADMIN] Activation email sent for company', company.key);
+            return callback(null, { ok: true });
         });
     });
 }
@@ -106,38 +107,6 @@ module.exports.getCompanies = function (req, res){
 };
 
 /**
- * Listener called when front website submits a company key to check.
- */
-module.exports.onKeyCheck = function(message) {
-    var key = message.key;
-    // check for unicity
-    Company.findOne({ key: key }, function(err, company){
-        var available = true;
-        if (company) available = false;
-        bus.publishKeyCheckResult(key, available);
-    });
-};
-
-/**
- * Listener called when front website submits a company to register.
- */
-module.exports.onRegister = function(message) {
-    var company = message;
-    register(company, function(err){
-        if (err) bus.publishRegistrationResult(company, false, err.message);
-        else bus.publishRegistrationResult(company, true);
-    });
-};
-
-/**
- * Creates new company account
- */
-module.exports.register = function (req, res) {
-    var company = req.body;
-    register(company, controller.wrapup(res));
-};
-
-/**
  * Binds an APP agent to a company.
  */
 module.exports.bindCompanyAgent = function (req, res){
@@ -183,6 +152,80 @@ module.exports.standbyCompanyAgent = function (req, res){
             bus.publishStandby(company, agent);
             return controller.success(res, agent);
         });
+    });
+};
+
+/**
+ * Checks availability of a company key.
+ */
+module.exports.checkKey = function(req, res) {
+    var key = req.body.key;
+    // check for unicity
+    Company.findOne({ key: key }, function(err, company){
+        var available = true;
+        if (company) available = false;
+        return controller.success(res, { available: available });
+    });
+};
+
+/**
+ * Creates new company account
+ */
+module.exports.register = function (req, res) {
+    var company = req.body;
+    console.dir(company);
+    register(company, controller.wrapup(res));
+};
+
+/**
+ * Resends activation email with a fresh activation token.
+ * Note: it invalidates any previous activation link sent before.
+ */
+module.exports.sendActivationEmail = function (req, res){
+    var _id = req.params._id;
+    Company.findById(_id, function(err, company){
+        if (err) return controller.error(res, err);
+        if (company.active) return controller.error(res, new Error('Company account is already active'));
+        // Send activation email
+        sendActivation(company, controller.wrapup(res));
+    });
+};
+
+/**
+ * Resends activation email with a fresh activation token (web service)
+ * Note: it invalidates any previous activation link sent before.
+ */
+module.exports.sendActivationEmailWS = function (req, res){
+    var companyKey = req.body.company;
+    Company.findOne({ key: companyKey }, function(err, company){
+        if (err) return controller.error(res, err);
+        if (company.active) return controller.error(res, new Error('Company account is already active'));
+        // Send activation email
+        sendActivation(company, controller.wrapup(res));
+    });
+};
+
+/**
+ * Activates company account (web service)
+ */
+module.exports.activateWS = function (req, res) {
+    var companyKey = req.body.company;
+    var token = req.body.token;
+    Company.findOne({ key: companyKey }, function(err, company){
+        if (err) return controller.error(res, err);
+
+        // check company status
+        if (company.active) return controller.error(res, new Error('Company account is already active'));
+
+        // check activation token
+        var now = new Date();
+        if (!company.activation || company.activation.token != token || company.activation.expirationDate < now) {
+            return controller.error(res, new Error('Invalid activation token'));
+        }
+
+        Company.update({ key: companyKey }, { $unset: { activation: 1 }, $set: { active: true } });
+
+        return controller.success(res, { email: company.details.contact.email });
     });
 };
 

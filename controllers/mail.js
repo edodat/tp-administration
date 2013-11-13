@@ -43,25 +43,25 @@ function send(recipient, subject, text, HTML, callback){
 ////////////
 
 module.exports.sendActivation = function(recipient, activationLink, callback){
-    var subject = 'Activate your Lean Project instance';
+    var subject = 'Activate your '+config.PRODUCT+' instance';
     var text = 'Hello,\n' +
-        'Thank you for registering to Lean Project!\n' +
+        'Thank you for registering to '+config.PRODUCT+'!\n' +
         'Please copy the link below in your internet browser to activate your private instance:\n' +
         activationLink+'\n' +
         '\n' +
-        'If you encounter any issues during the activation process, please contact our Support team at support@lean-project.\n' +
+        'If you encounter any issues during the activation process, please contact our Support team at '+config.SUPPORT+'.\n' +
         '\n' +
         'Regards,\n' +
-        'The Lean Project team';
+        'The '+config.PRODUCT+' team';
     var HTML = 'Hello,<br>' +
-        'Thank you for registering to Lean Project!<br>' +
+        'Thank you for registering to '+config.PRODUCT+'!<br>' +
         'Please click on the link below (or copy it in your internet browser) to activate your private instance:<br>' +
         '<a href="'+activationLink+'">'+activationLink+'</a><br>' +
         '<br>' +
-        'If you encounter any issues during the activation process, please contact our Support team at support@lean-project.<br>' +
+        'If you encounter any issues during the activation process, please contact our Support team at '+config.SUPPORT+'.<br>' +
         '<br>' +
         'Regards,<br>' +
-        'The Lean Project team';
+        'The '+config.PRODUCT+' team';
 
     send(recipient, subject, text, HTML, callback);
 };
